@@ -1,0 +1,33 @@
+.notification {
+  border: solid;
+  margin-bottom: 20px;
+  background-color: beige;
+  width: fit-content;
+  padding: 15px 20px;
+  border-radius: 8px;
+}
+.success-notification-color {
+  color: green;
+}
+.error-notification-color {
+  color: red;
+}
+.display-flex-gap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.blog-item {
+  border: solid;
+  border-radius: 2px;
+  padding: 6px;
+  margin-bottom: 14px;
+}
+.delete-button {
+  background-color: rgb(148, 45, 45);
+  color: white;
+  border-radius: 2px;
+}
+button {
+  cursor: pointer;
+}
