@@ -1,4 +1,8 @@
-const Notification = ({notification}) => {
+import { useContext } from 'react'
+import NotificationContext from '../NotificationContext'
+
+const Notification = () => {
+  const [notification] = useContext(NotificationContext)
   if (notification) {
     if (notification.type === 'success') {
       return (
