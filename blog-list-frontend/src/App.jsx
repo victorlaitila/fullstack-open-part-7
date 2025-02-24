@@ -7,20 +7,20 @@ import loginService from './services/login'
 import './index.css'
 import { useContext } from 'react'
 import NotificationContext from './NotificationContext'
+import { useQuery } from '@tanstack/react-query'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [notificaton, setNotification] = useContext(NotificationContext)
 
-  const initializeBlogs = async () => {
-    const blogs = await blogService.getAll()
-    setBlogs(blogs.sort((a, b) => b.likes - a.likes))
-  }
+  const result = useQuery({
+    queryKey: ['blogs'],
+    queryFn: blogService.getAll,
+    retry: 1,
+    refetchOnWindowFocus: false
+  })
 
-  useEffect(() => {
-    initializeBlogs()
-  }, [])
+  const blogs = result.data ? result.data.sort((a, b) => b.likes - a.likes) : result.data
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -46,22 +46,6 @@ const App = () => {
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogappUser')
     setUser(null)
-  }
-
-  const createNewBlog = async (title, author, url) => {
-    try {
-      const newBlog = await blogService.create({
-        title: title,
-        author: author,
-        url: url,
-        user: user.id,
-      })
-      setBlogs(blogs.concat(newBlog).sort((a, b) => b.likes - a.likes))
-      setNotification(`A new blog '${newBlog.title}' by '${newBlog.author}' added`, 'success')
-    } catch (error) {
-      console.error(error)
-      setNotification('Failed to create blog', 'error')
-    }
   }
 
   const deleteBlog = async (blog) => {
@@ -98,10 +82,8 @@ const App = () => {
       <Notification />
       {user ? (
         <BlogList
-          blogs={blogs}
           user={user}
           handleLogout={handleLogout}
-          createNewBlog={createNewBlog}
           likeBlog={likeBlog}
           deleteBlog={deleteBlog}
         />
