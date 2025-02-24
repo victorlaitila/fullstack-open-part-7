@@ -16,11 +16,23 @@ const userReducer = (state, action) => {
   }
 }
 
+const allUsersReducer = (state, action) => {
+  switch (action.type) {
+    case 'SET':
+      return action.payload
+    case 'RESET':
+      return []
+    default:
+      return state
+  }
+}
+
 const UserContext = createContext()
 
 export const UserContextProvider = (props) => {
   const [notificaton, setNotification] = useContext(NotificationContext)
   const [user, userDispatch] = useReducer(userReducer, null)
+  const [allUsers, allUsersDispatch] = useReducer(allUsersReducer, [])
 
   const loginUser = async (username, password) => {
     try {
@@ -40,7 +52,7 @@ export const UserContextProvider = (props) => {
   }
 
   return (
-    <UserContext.Provider value={{user, userDispatch, loginUser, logoutUser}}>
+    <UserContext.Provider value={{user, userDispatch, loginUser, logoutUser, allUsers, allUsersDispatch}}>
       {props.children}
     </UserContext.Provider>
   )
