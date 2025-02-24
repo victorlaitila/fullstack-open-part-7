@@ -20,7 +20,7 @@ const App = () => {
     refetchOnWindowFocus: false
   })
 
-  const blogs = result.data ? result.data.sort((a, b) => b.likes - a.likes) : result.data
+  result.data ? result.data.sort((a, b) => b.likes - a.likes) : result.data
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -48,35 +48,6 @@ const App = () => {
     setUser(null)
   }
 
-  const deleteBlog = async (blog) => {
-    const confirmationMsg = `Are you sure you want to delete blog '${blog.title}' by '${blog.author}'?`
-    if (window.confirm(confirmationMsg)) {
-      try {
-        await blogService.deleteById(blog.id)
-        setBlogs(blogs.filter((b) => b.id !== blog.id))
-        setNotification(`Blog '${blog.title}' by '${blog.author}' successfully deleted`, 'success')
-      } catch {
-        setNotification('Blog has already been deleted, refreshing list', 'error')
-        initializeBlogs()
-      }
-    }
-  }
-
-  const likeBlog = async (id) => {
-    try {
-      const blogToUpdate = blogs.find((blog) => blog.id === id)
-      const newBlogObject = { ...blogToUpdate, likes: blogToUpdate.likes + 1 }
-      const updatedBlog = await blogService.updateById(id, newBlogObject)
-      setBlogs(
-        blogs
-          .map((blog) => (blog.id === id ? updatedBlog : blog))
-          .sort((a, b) => b.likes - a.likes),
-      )
-    } catch (error) {
-      setNotification(error.message, 'error')
-    }
-  }
-
   return (
     <div>
       <Notification />
@@ -84,8 +55,6 @@ const App = () => {
         <BlogList
           user={user}
           handleLogout={handleLogout}
-          likeBlog={likeBlog}
-          deleteBlog={deleteBlog}
         />
       ) : (
         <LoginForm handleLogin={handleLogin} />

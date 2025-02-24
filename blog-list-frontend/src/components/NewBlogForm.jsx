@@ -22,8 +22,7 @@ const NewBlogForm = () => {
       )
       setNotification(`A new blog '${newBlog.title}' by '${newBlog.author}' added`, 'success')
     },
-    onError: (error) => {
-      console.error(error)
+    onError: () => {
       setNotification('Failed to create blog', 'error')
     }
   })

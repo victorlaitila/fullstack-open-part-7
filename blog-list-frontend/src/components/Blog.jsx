@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react'
+import useBlogMutations from '../hooks/useBlogMutations'
 
-const Blog = ({blog, likeBlog, username, deleteBlog}) => {
+const Blog = ({blog, username}) => {
   const [blogDetailsVisible, setBlogDetailsVisible] = useState(false)
+  const { likeBlog, deleteBlog } = useBlogMutations()
 
   const BlogDetails = () => {
     return (
@@ -14,7 +16,7 @@ const Blog = ({blog, likeBlog, username, deleteBlog}) => {
         <a href={blog.url}>{blog.url}</a>
         <div className='display-flex-gap'>
           {`Likes: ${blog.likes}`}
-          <button onClick={() => likeBlog(blog.id)}>like</button>
+          <button onClick={() => likeBlog(blog)}>like</button>
         </div>
         {blog.user.name}
         {
@@ -43,9 +45,7 @@ const Blog = ({blog, likeBlog, username, deleteBlog}) => {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  likeBlog: PropTypes.func.isRequired,
   username: PropTypes.string.isRequired,
-  deleteBlog: PropTypes.func.isRequired
 }
 
 export default Blog
