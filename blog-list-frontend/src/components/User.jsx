@@ -1,10 +1,7 @@
-import LoggedInUserInfo from "./LoggedInUserInfo"
-
 const User = ({user}) => {
   if (user) {
     return (
       <div>
-        <LoggedInUserInfo />
         <h2>{user.name}</h2>
         {user.blogs.length > 0 ?
           <div>

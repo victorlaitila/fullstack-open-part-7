@@ -1,4 +1,3 @@
-import LoggedInUserInfo from "./LoggedInUserInfo"
 import { Link } from "react-router-dom"
 import { useContext } from "react"
 import UserContext from "../UserContext"
@@ -10,7 +9,6 @@ const UserList = () => {
     return (
       <div>
         <h2>Users</h2>
-        <LoggedInUserInfo />
         <br />
         <table>
           <thead>

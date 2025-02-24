@@ -15,6 +15,7 @@ import {
 } from 'react-router-dom'
 import axios from 'axios'
 import BlogPage from './components/BlogPage'
+import LoggedInUserInfo from './components/LoggedInUserInfo'
 
 
 const App = () => {
@@ -52,9 +53,10 @@ const App = () => {
   return (
     <div>
       {user && 
-        <div>
+        <div className='navigation-menu'>
           <Link className='padding' to='/'>blogs</Link>
           <Link className='padding' to='/users'>users</Link>
+          <LoggedInUserInfo />
         </div>
       }
       <Notification />
