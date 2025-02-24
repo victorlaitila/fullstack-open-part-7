@@ -1,11 +1,13 @@
 import Blog from './Blog'
 import NewBlogForm from './NewBlogForm'
-import PropTypes from 'prop-types'
 import { useQueryClient } from '@tanstack/react-query'
+import { useContext } from 'react'
+import UserContext from '../UserContext'
 
-const BlogList = ({user, handleLogout}) => {
+const BlogList = () => {
   const queryClient = useQueryClient()
   const blogs = queryClient.getQueryData(['blogs'])
+  const { user, logoutUser } = useContext(UserContext)
   
   if (blogs) {
     return (
@@ -13,7 +15,7 @@ const BlogList = ({user, handleLogout}) => {
         <h2>Blogs</h2>
         <div className='display-flex-gap'>
           <p>{`${user.name} logged in`}</p>
-          <button onClick={handleLogout}>Logout</button>
+          <button onClick={logoutUser}>Logout</button>
         </div>
         <NewBlogForm />
         <br />
@@ -21,18 +23,12 @@ const BlogList = ({user, handleLogout}) => {
           <Blog
             key={blog.id}
             blog={blog}
-            username={user.username}
           />
         )}
         <br />
       </div>
     )
   }
-}
-
-BlogList.propTypes = {
-  user: PropTypes.object.isRequired,
-  handleLogout: PropTypes.func.isRequired,
 }
 
 export default BlogList

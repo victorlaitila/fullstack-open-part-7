@@ -1,17 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import LoginForm from './components/LoginForm'
 import BlogList from './components/BlogList'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
-import loginService from './services/login'
 import './index.css'
 import { useContext } from 'react'
-import NotificationContext from './NotificationContext'
 import { useQuery } from '@tanstack/react-query'
+import UserContext from './UserContext'
 
 const App = () => {
-  const [user, setUser] = useState(null)
-  const [notificaton, setNotification] = useContext(NotificationContext)
+  const { user, userDispatch } = useContext(UserContext)
 
   const result = useQuery({
     queryKey: ['blogs'],
@@ -26,39 +24,15 @@ const App = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
+      userDispatch({ type: 'SET', payload: user })
       blogService.setToken(user.token)
     }
   }, [])
 
-  const handleLogin = async (username, password) => {
-    try {
-      const user = await loginService.login({ username, password })
-      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
-      blogService.setToken(user.token)
-      setUser(user)
-    } catch (error) {
-      console.error(error)
-      setNotification('Wrong username or password', 'error')
-    }
-  }
-
-  const handleLogout = () => {
-    window.localStorage.removeItem('loggedBlogappUser')
-    setUser(null)
-  }
-
   return (
     <div>
       <Notification />
-      {user ? (
-        <BlogList
-          user={user}
-          handleLogout={handleLogout}
-        />
-      ) : (
-        <LoginForm handleLogin={handleLogin} />
-      )}
+      {user ? (<BlogList />) : (<LoginForm />)}
     </div>
   )
 }

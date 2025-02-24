@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 import useBlogMutations from '../hooks/useBlogMutations'
+import { useContext } from 'react'
+import UserContext from '../UserContext'
 
-const Blog = ({blog, username}) => {
+const Blog = ({blog}) => {
   const [blogDetailsVisible, setBlogDetailsVisible] = useState(false)
   const { likeBlog, deleteBlog } = useBlogMutations()
+  const { user } = useContext(UserContext)
 
   const BlogDetails = () => {
     return (
@@ -20,7 +23,7 @@ const Blog = ({blog, username}) => {
         </div>
         {blog.user.name}
         {
-          username === blog.user.username &&
+          user.username === blog.user.username &&
           <div>
             <button className='delete-button' onClick={() => deleteBlog(blog)}>delete</button>
           </div>
@@ -44,8 +47,7 @@ const Blog = ({blog, username}) => {
 }
 
 Blog.propTypes = {
-  blog: PropTypes.object.isRequired,
-  username: PropTypes.string.isRequired,
+  blog: PropTypes.object.isRequired
 }
 
 export default Blog
