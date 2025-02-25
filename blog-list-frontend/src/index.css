@@ -1,6 +1,7 @@
 .notification {
   border: solid;
   margin-bottom: 20px;
+  margin-top: 20px;
   background-color: beige;
   width: fit-content;
   padding: 15px 20px;
