@@ -42,6 +42,7 @@ blogsRouter.delete('/:id', middleware.userExtractor, async (request, response) =
   const user = request.user
   const blog = await Blog.findById(request.params.id)
   if (user.id.toString() === blog.user.toString()) {
+    await Comment.deleteMany({ _id: { $in: blog.comments }})
     await Blog.deleteOne({ _id: blog.id })
     response.status(204).end()
   } else {
