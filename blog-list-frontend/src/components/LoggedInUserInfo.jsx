@@ -6,7 +6,7 @@ const LoggedInUserInfo = () => {
   if (user) {
     return (
       <div className='display-flex-gap'>
-        <p>{`${user.name} logged in`}</p>
+        <div>{`${user.name} logged in`}</div>
         <button onClick={logoutUser}>Logout</button>
       </div>
     )

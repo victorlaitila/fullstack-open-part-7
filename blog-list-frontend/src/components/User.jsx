@@ -1,13 +1,18 @@
+import { useQueryClient } from "@tanstack/react-query"
+
 const User = ({user}) => {
+  const queryClient = useQueryClient()
+  const blogs = queryClient.getQueryData(['blogs'])
+  const blogsByUser = blogs.filter(blog => blog.user.id === user.id)
   if (user) {
     return (
       <div>
         <h2>{user.name}</h2>
-        {user.blogs.length > 0 ?
+        {user.numberOfBlogs > 0 ?
           <div>
             <h3>Added blogs</h3>
             <ul>
-              {user.blogs.map(blog => (
+              {blogsByUser.map(blog => (
                 <li key={blog.id}>
                   {blog.title}
                 </li>

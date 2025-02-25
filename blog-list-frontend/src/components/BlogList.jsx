@@ -9,7 +9,7 @@ const BlogList = () => {
   if (blogs) {
     return (
       <div>
-        <h2>Blogs</h2>
+        <h2 className='magin-bottom-10'>Blogs</h2>
         <NewBlogForm />
         <br />
         {blogs.map(blog =>

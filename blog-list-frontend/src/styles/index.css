@@ -18,6 +18,9 @@
   align-items: center;
   gap: 10px;
 }
+.display-block {
+  display: block;
+}
 .blog-item {
   border: solid;
   border-radius: 2px;
@@ -58,6 +61,18 @@ td {
   display: flex;
   align-items: center;
   gap: 8px;
-  background-color: rgb(219, 201, 201);
-  padding: 0px 10px;
+  background-color: rgb(200, 216, 236);
+  padding: 14px 10px;
+  margin-bottom: 20px;
+}
+.margin-bottom-10 {
+  margin-bottom: 10px;
+}
+.margin-bottom-30 {
+  margin-bottom: 30px;
+}
+button {
+  border-radius: 4px;
+  background-color: rgb(91, 91, 203);
+  color: white;
 }

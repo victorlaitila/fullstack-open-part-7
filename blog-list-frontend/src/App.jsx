@@ -5,7 +5,7 @@ import UserList from './components/UserList'
 import User from './components/User'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
-import './index.css'
+import './styles/index.css'
 import { useContext } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import UserContext from './UserContext'
@@ -59,7 +59,7 @@ const App = () => {
   const selectedBlog = blogMatch ? blogs?.find(blog => blog.id === blogMatch.params.id) : null
 
   return (
-    <div>
+    <div className='container'>
       {user && 
         <div className='navigation-menu'>
           <Link className='padding' to='/'>blogs</Link>

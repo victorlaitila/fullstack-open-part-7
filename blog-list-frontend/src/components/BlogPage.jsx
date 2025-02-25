@@ -29,10 +29,9 @@ const BlogPage = ({blog}) => {
         <h2>{blog.title}</h2>
         <a href={blog.url}>{blog.url}</a>
         <div className='display-flex-gap'>
-          <p>{blog.likes} likes</p><button onClick={() => likeBlog(blog)}>like</button>
+          <div>{blog.likes} likes</div><button onClick={() => likeBlog(blog)}>like</button>
         </div>
         <div>added by {blog.user.name}</div>
-        <br />
         {
           user.username === blog.user.username &&
           <div>
@@ -40,6 +39,7 @@ const BlogPage = ({blog}) => {
           </div>
         }
         <div>
+          <br />
           <h4>Comments</h4>
           <div>
             <input
@@ -48,8 +48,8 @@ const BlogPage = ({blog}) => {
               name='Comment'
               onChange={({target}) => setComment(target.value)}
             />
-            <button onClick={addComment}>add comment</button>
           </div>
+          <button className='margin-bottom-30' onClick={addComment}>add comment</button>
           <br />
           {blog.comments && blog.comments.length > 0 ?
             <ul>
