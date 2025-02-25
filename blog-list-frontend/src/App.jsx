@@ -38,7 +38,15 @@ const App = () => {
       blogService.setToken(user.token)
     }
     axios.get('/api/users')
-      .then(response => allUsersDispatch({ type: 'SET', payload: response.data }))
+      .then(response => {
+        const usersAndNumberOfBlogs = response.data.map(user => ({
+          id: user.id,
+          name: user.name,
+          username: user.username,
+          numberOfBlogs: user.blogs.length
+        }))
+        allUsersDispatch({ type: 'SET', payload: usersAndNumberOfBlogs })
+      })
       .catch(error => console.error(error))
   }, [])
 

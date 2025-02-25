@@ -4,12 +4,13 @@ import { useContext } from 'react'
 import NotificationContext from '../NotificationContext'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import UserContext from '../UserContext'
 
 const useBlogMutations = () => {
   const [notificaton, setNotification] = useContext(NotificationContext)
   const [blogToDelete, setBlogToDelete] = useState(null)
   const queryClient = useQueryClient()
-  //const { allUsersDispatch } = useContext(UserContext)
+  const { allUsersDispatch } = useContext(UserContext)
   const navigate = useNavigate()
 
   const newBlogMutation = useMutation({
@@ -21,6 +22,7 @@ const useBlogMutations = () => {
         blogs.concat(newBlog).sort((a, b) => b.likes - a.likes)
       )
       setNotification(`A new blog '${newBlog.title}' by '${newBlog.author}' added`, 'success')
+      allUsersDispatch({ type: 'INCREASE', payload: newBlog.user.id })
     },
     onError: () => {
       setNotification('Failed to create blog', 'error')
@@ -65,6 +67,7 @@ const useBlogMutations = () => {
       queryClient.invalidateQueries(['blogs'])
       setNotification(`Blog '${blogToDelete.title}' by '${blogToDelete.author}' successfully deleted`, 'success')
       setBlogToDelete(null)
+      allUsersDispatch({ type: 'DECREASE', payload: blogToDelete.user.id })
       navigate('/')
     },
     onError: (error) => {

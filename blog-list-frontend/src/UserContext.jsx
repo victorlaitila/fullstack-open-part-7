@@ -20,8 +20,12 @@ const allUsersReducer = (state, action) => {
   switch (action.type) {
     case 'SET':
       return action.payload
-    case 'RESET':
-      return []
+    case 'INCREASE': {
+      return state.map(user => user.id === action.payload ? {...user, numberOfBlogs: user.numberOfBlogs + 1} : user)
+    }
+    case 'DECREASE': {
+      return state.map(user => user.id === action.payload ? {...user, numberOfBlogs: user.numberOfBlogs - 1} : user)
+    }
     default:
       return state
   }
